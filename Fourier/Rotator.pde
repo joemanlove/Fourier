@@ -13,6 +13,7 @@ class Rotator {
 
   void display() {
     noFill();
+    stroke(0);
     circle(0, 0, 2*this.radius);
     arrow_x = this.radius*cos(radians(this.theta)*this.order);
     arrow_y = this.radius*sin(radians(this.theta)*this.order);
@@ -21,7 +22,7 @@ class Rotator {
   }
 
   void go_brrrr() {
-    this.theta -= .3;
+    this.theta -= speed_scale;
   }
   
 }

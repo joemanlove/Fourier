@@ -1,40 +1,71 @@
-//Rotator test;
-//Rotator test_2;
-//Rotator test_3;
+// rotators store all the vector information for each order
 ArrayList<Rotator> rotators = new ArrayList<Rotator>();
+
+// scaling factor, the size of a unit in pixels
 int scaling = 50;
 
+// sclaing for speed, .3 is good and slow, 1 is mega quick (degrees turned per frame)
+float speed_scale = .7;
+
+// number of vectors
+// MUST BE ODD
+int num_vectors = 25;
+
+// points stores all the points that the end of the last vector has been to
+ArrayList<Point> points = new ArrayList<Point>();
 
 void setup() {
+  // window dressing
   size(800, 600);
   background(255);
-  //test = new Rotator(1,0,1);
-  //test_2 = new Rotator(.75,30,3);
-  //test_3 = new Rotator(.63,-135,4);
-  float[] radii = new float[10];
-  for (int i=0; i<10; i++) {
-    radii[i] = random(.1, 2);
-  }
-  radii = reverse(sort(radii));
-  for (int i=0; i<10; i++) {
-    rotators.add(new Rotator(radii[i], random(360), int(random(-20,20))));
+
+  //based on the number of vectors, calculate orders
+  int orders = (num_vectors-1)/2;
+
+  // initialize rotator array
+  for (int i=-1* orders; i <= orders; i++) {
+
+    // add new rorators with random radii, random initial angle, and order i
+    rotators.add(new Rotator(random(.2, 1.2), random(360), i));
   } 
 
   translate(width/2, height/2);
 }
 
 void draw() {
+  // background wipe
   background(255);
+  
+  // center the origin
   translate(width/2, height/2);
-  for (int i=0; i<10; i++) {
+  
+  // temporary coordinates for the rotators
+  pushMatrix();
+  
+  // keeping track of the x,y positions of the last arrow
+  float x =0;
+  float y =0;
+  
+  // go through the arraylist of rotators
+  for (int i=0; i<num_vectors; i++) {
     Rotator current = rotators.get(i);
+    // draw it, make it move
     current.display();
     current.go_brrrr();
+    
+    // update positions
+    x += current.arrow_x;
+    y += current.arrow_y;
+    
+    // the last one gets added to the list of visited points
+    if(i == num_vectors - 1){
+      points.add(new Point(x, y));
+    }
   }
-  //test.display();
-  //test.go_brrrr();
-  //test_2.display();
-  //test_2.go_brrrr();
-  //test_3.display();
-  //test_3.go_brrrr();
+  // remove temp coordinates
+  popMatrix();
+  
+  // plot our shape
+  plot_curve(points);
+  
 }
