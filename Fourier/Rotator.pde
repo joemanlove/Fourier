@@ -6,16 +6,16 @@ class Rotator {
   float arrow_y;
   color colour;
 
-  Rotator(float coef_radius, float coef_theta, int n) {
+  Rotator(float coef_radius, float coef_theta, int n, color colour) {
     this.theta = coef_theta;
     this.radius = scaling*coef_radius;
     this.order = n;
-    this.colour = randomColor();
+    this.colour = colour;
   }
 
   void display() {
     noFill();
-    stroke(this.colour, 60);
+    stroke(this.colour, 40);
     circle(0, 0, 2*this.radius);
 
     // arrow end coordinates
@@ -37,9 +37,7 @@ class Rotator {
 
     // Filled triangle
     fill(this.colour, 255);
-    triangle(10*cos(radians(150)), 10*sin(radians(150)), 
-      0, 0, 
-      10*cos(radians(150)), -10*sin(radians(150)));
+    triangle(10*cos(radians(150)), 10*sin(radians(150)), 0, 0, 10*cos(radians(150)), -10*sin(radians(150)));
     popMatrix();
   }
 

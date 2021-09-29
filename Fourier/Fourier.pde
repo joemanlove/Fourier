@@ -5,11 +5,11 @@ ArrayList<Rotator> rotators = new ArrayList<Rotator>();
 int scaling = 50;
 
 // sclaing for speed, .3 is good and slow, 1 is mega quick (degrees turned per frame)
-float speed_scale = .7;
+float speed_scale = .4;
 
 // number of vectors
 // MUST BE ODD
-int num_vectors = 25;
+int num_vectors = 7;
 
 // points stores all the points that the end of the last vector has been to
 ArrayList<Point> points = new ArrayList<Point>();
@@ -19,14 +19,24 @@ void setup() {
   size(800, 600);
   background(255);
 
-  //based on the number of vectors, calculate orders
-  int orders = (num_vectors-1)/2;
+  // n is the order of the term in the Fourier Series, 
+  int n = 0;
+  // colors for the rotators, each pair in the same order are matching colors.
+  color colour = randomColor();
 
-  // initialize rotator array
-  for (int i=-1* orders; i <= orders; i++) {
+  // initialize rotator array in sequence 0, -1, 1, -2, 2, -3, 3, ...
+  for (int i=0; i <= num_vectors; i++) {
+    if(i % 2 == 0){
+      rotators.add(new Rotator(random(.2, 1.2), random(360), n, colour));
+    }
+    else{
+      n++;
+      colour = randomColor();
+      rotators.add(new Rotator(random(.2, 1.2), random(360), -1*n, colour));
+    }
 
     // add new rorators with random radii, random initial angle, and order i
-    rotators.add(new Rotator(random(.2, 1.2), random(360), i));
+    //rotators.add(new Rotator(random(.2, 1.2), random(360), i));
   } 
 
   translate(width/2, height/2);
