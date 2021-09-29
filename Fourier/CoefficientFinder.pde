@@ -29,7 +29,7 @@ Point findCoefficient(int n) {
 
 void loadGoalPoints() {
   JSONArray items;
-  items = loadJSONArray("s1.json");
+  items = loadJSONArray("bezos.json");
 
   for (int i = 0; i < items.size(); i++) {
 

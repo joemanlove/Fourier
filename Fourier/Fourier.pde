@@ -9,7 +9,7 @@ float speed_scale = .4;
 
 // number of vectors
 // MUST BE ODD
-int num_vectors = 11;
+int num_vectors = 15;
 
 // points stores all the points that the end of the last vector has been to
 ArrayList<Point> points = new ArrayList<Point>();
@@ -41,7 +41,7 @@ void setup() {
       n++;
       colour = randomColor();
       Point coef = findCoefficient(-n);
-      rotators.add(new Rotator(coef.x, degrees(coef.y), n, colour));
+      rotators.add(new Rotator(coef.x, coef.y, -n, colour));
       //rotators.add(new Rotator(random(.2, 1.2), random(360), -1*n, colour));
     }
   }
@@ -87,5 +87,5 @@ void draw() {
   plot_curve(points, #0000FF);
 
   //plot the goal
-  plot_curve(goal_points, #00FF00);
+  //plot_curve(goal_points, #00FF00);
 }
