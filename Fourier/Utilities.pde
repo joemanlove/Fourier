@@ -1,3 +1,7 @@
+color randomColor(){
+  return color(random(235), random(235), random(235));
+}
+
 class Point {
   float x;
   float y;
