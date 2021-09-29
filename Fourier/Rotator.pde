@@ -1,5 +1,6 @@
 class Rotator {
   float theta = 0;
+  float init_theta = 0;
   float radius = 1;
   int order = 0;
   float arrow_x;
@@ -7,7 +8,7 @@ class Rotator {
   color colour;
 
   Rotator(float coef_radius, float coef_theta, int n, color colour) {
-    this.theta = coef_theta;
+    this.init_theta = coef_theta;
     this.radius = scaling*coef_radius;
     this.order = n;
     this.colour = colour;
@@ -19,8 +20,8 @@ class Rotator {
     circle(0, 0, 2*this.radius);
 
     // arrow end coordinates
-    arrow_x = this.radius*cos(radians(this.theta)*this.order);
-    arrow_y = this.radius*sin(radians(this.theta)*this.order);
+    arrow_x = this.radius*cos(radians(this.theta)*this.order+this.init_theta);
+    arrow_y = this.radius*sin(radians(this.theta)*this.order+this.init_theta);
 
     // draw line to end of arrow, translate there
     stroke(this.colour, 255);
@@ -29,7 +30,7 @@ class Rotator {
 
     // draw the arrow head
     pushMatrix();
-    rotate(radians(this.theta)*this.order);
+    rotate(radians(this.theta)*this.order+this.init_theta);
 
     // v style
     //line(0, 0, 10*cos(radians(150)), 10*sin(radians(150)));
