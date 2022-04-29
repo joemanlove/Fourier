@@ -13,23 +13,27 @@
 // theta = atan2(imagPart, realPart)
 
 Point findCoefficient(int n) {
+  
+  // integrate the curve against e^-2n\pi t
+  // P is the number of points sampled (This can create some strangeness.)
   int P = goal_points.size();
   float realPart =0;
   float imagPart =0;
+  // Riemann approximation, p/P is the percentage around the circle
   for (int p =0; p<P; p++) {
     realPart += goal_points.get(p).x*cos(-2*n*PI*p/P) - goal_points.get(p).y * sin(-2*n*PI* p/P);
     imagPart += goal_points.get(p).y*cos(-2*n*PI*p/P) + goal_points.get(p).x * sin(-2*n*PI* p/P);
   }
+  // averaging since we wanted int_0^1, but instead did sum_0^P
   realPart = realPart/P;
   imagPart = imagPart/P;
-  println(realPart);
-  println(imagPart);
+  // TODO This is an abuse of the Point class, write a complex number class
   return new Point(dist(0,0,realPart,imagPart), atan2(imagPart, realPart));
 }
 
-void loadGoalPoints() {
+void loadGoalPoints(String filename) {
   JSONArray items;
-  items = loadJSONArray("bezos.json");
+  items = loadJSONArray(filename);
 
   for (int i = 0; i < items.size(); i++) {
 

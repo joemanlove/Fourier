@@ -16,8 +16,7 @@ void draw() {
     fill(0);
     text(i, width/2, height/2);
     Point mouse = new Point(mouseX, mouseY);
-    draw_points.add(mouse);
-    JSONObject point = new JSONObject();    
+    draw_points.add(mouse);    
     i++;
   }
   plot_curve(draw_points);
@@ -29,12 +28,13 @@ void keyPressed() {
 
       JSONObject point = new JSONObject();
 
-      point.setFloat("x", draw_points.get(i).x);
-      point.setFloat("y", draw_points.get(i).y);
+      point.setFloat("x", draw_points.get(i).x-width/2);
+      point.setFloat("y", draw_points.get(i).y-height/2);
 
       storage.setJSONObject(i, point);
     }
     saveJSONArray(storage, "data/new.json");
+    println("saved");
   }
 }
 

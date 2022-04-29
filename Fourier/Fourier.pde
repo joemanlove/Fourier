@@ -9,7 +9,7 @@ float speed_scale = .4;
 
 // number of vectors
 // MUST BE ODD
-int num_vectors = 15;
+int num_vectors = 105;
 
 // points stores all the points that the end of the last vector has been to
 ArrayList<Point> points = new ArrayList<Point>();
@@ -21,21 +21,21 @@ void setup() {
   // window dressing
   size(800, 600);
   background(255);
-  
-  
-  loadGoalPoints();
-  
+
+
+  loadGoalPoints("oct.json");
+
   // n is the order of the term in the Fourier Series, 
   int n = 0;
   // colors for the rotators, each pair in the same order are matching colors.
   color colour = randomColor();
 
   // initialize rotator array in sequence 0, -1, 1, -2, 2, -3, 3, ...
+  // from JOSN of Picture
   for (int i=0; i < num_vectors; i++) {
     if (i % 2 == 0) {
       //rotators.add(new Rotator(random(.2, 1.2), random(360), n, colour));
       Point coef = findCoefficient(n);
-      print(degrees(coef.y));
       rotators.add(new Rotator(coef.x, coef.y, n, colour));
     } else {
       n++;
@@ -45,7 +45,14 @@ void setup() {
       //rotators.add(new Rotator(random(.2, 1.2), random(360), -1*n, colour));
     }
   }
-
+  //// random coefficients
+  //for (int i=0; i < num_vectors; i++) {
+  //  if (i % 2 == 0) {
+  //    rotators.add(new Rotator(random(.2, 1.2), random(360), n, colour));
+  //  } else {
+  //    rotators.add(new Rotator(random(.2, 1.2), random(360), -1*n, colour));
+  //  }
+  //}
 
   translate(width/2, height/2);
 }
@@ -83,9 +90,9 @@ void draw() {
   // remove temp coordinates
   popMatrix();
 
-  // plot our shape
-  plot_curve(points, #0000FF);
-
   //plot the goal
   //plot_curve(goal_points, #00FF00);
+
+  // plot our shape
+  plot_curve(points, #0000FF);
 }
